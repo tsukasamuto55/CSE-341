@@ -7,17 +7,6 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use('/', require('./routes'))
 
-const families = [
-    {
-        name: 'Emily Muto',
-        hobby: 'Drawing'
-    },
-    {
-        name: 'Sakuya Muto',
-        hobby: 'Watching Blippi'
-    }
-]
-
 app.get('/home', (req, res) => {
   res.render('home');
 })
