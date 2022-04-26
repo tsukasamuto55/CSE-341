@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Members</title>
+</head>
+<body>
+    <h1>My family members</h1>
+    <% for(let fam of family) { %> 
+        <ul>
+            <li style="list-style-type: none;"><b><%= fam.name %> </b></li>
+            <li style="text-indent: 8px; list-style-type: none;">Relationship: <%= fam.relationship %> </li>
+            <li style="text-indent: 8px; list-style-type: none;">DOB: <%= fam.DOB %> </li>
+            <img src="<%= fam.image %>" alt="pic of <%= fam.name %>">
+        </ul>
+    <% } %>
+</body>
+</html>
