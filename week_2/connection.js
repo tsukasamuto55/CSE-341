@@ -1,7 +1,8 @@
 const {MongoClient} = require('mongodb');
+require('dotenv').config();
 
 async function main() {
-    const uri = "mongodb+srv://tmuto:5HpJHOuq8yy3WnEA@tmuto.biong.mongodb.net/sample_airbnb?retryWrites=true&w=majority";
+    const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@tmuto.biong.mongodb.net/sample_airbnb?retryWrites=true&w=majority`;
     const client = new MongoClient(uri);
 
     try {
