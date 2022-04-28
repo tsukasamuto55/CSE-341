@@ -3,6 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
 const familyData = require('./data.json');
+require('dotenv').config();
 require('./connection');
 
 app.set('view engine', 'ejs');
