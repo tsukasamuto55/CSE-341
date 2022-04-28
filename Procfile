@@ -1,1 +1,1 @@
-web: node ./week2/server.js
+web: node ./week_2/server.js
