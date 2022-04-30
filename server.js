@@ -2,7 +2,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
-require('dotenv').config();
+const connection = require('./db/connect');
+
+connection.initDatabase();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

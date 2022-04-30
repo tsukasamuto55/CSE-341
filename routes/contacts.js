@@ -1,16 +1,12 @@
 const routes = require('express').Router();
+const connect = require('../db/connect');
 
 routes.get('/contacts', (req, res) => {
-    const MongoClient = require('mongodb').MongoClient;
-    MongoClient.connect(process.env.DB_STRING, function(err, db) {
-    if (err) throw err;
-    const dbo = db.db('cse341');
-    dbo.collection('contacts').find().toArray(function(err, result) {
-        if (err) throw err;
-        res.json(result);
-        db.close();
-        })
-    })
-})
+   connect.getCollection().find().toArray((err, result) => {
+       if (err) throw err;
+       res.json(result);
+       console.log('Contacts query Succesful')
+   });
+});
 
 module.exports = routes;
