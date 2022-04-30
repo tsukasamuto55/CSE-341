@@ -1,11 +1,11 @@
+const compression = require('compression');
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const path = require('path');
 
 require('dotenv').config();
-require('./connection');
-
+app.use(compression());
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('public', path.join(__dirname, 'public'));
@@ -23,4 +23,15 @@ app.get('/family', (req, res) => {
 app.listen(port, (err) => {
     if (err) console.log('There are some errors');
     console.log(`Listening on Port ${port}`)
+})
+
+const MongoClient = require('mongodb').MongoClient;
+MongoClient.connect(process.env.DB_STRING, function(err, db) {
+  if (err) throw err;
+  const dbo = db.db('cse341');
+  dbo.collection('contacts').find().toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  })
 })
