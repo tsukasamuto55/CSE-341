@@ -12,12 +12,11 @@ routes.get('/', (req, res) => {
 
 routes.get('/:id', (req, res) => {
     const contactId = new ObjectId(req.params.id);
-    
     const results = connect.getCollection().find({_id: contactId});
 
     results.toArray().then((contact_list) => {
         res.render('contacts', { 'contacts': contact_list });
-        console.log(`Returned First Contact: ${req.params.id}`);
+        console.log(`Returned Contact: ${req.params.id}`);
    });
 });
 
