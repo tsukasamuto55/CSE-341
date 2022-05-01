@@ -4,8 +4,8 @@ const ObjectId = require('mongodb').ObjectId;
 
 routes.get('/', (req, res) => {
     const results = connect.getCollection().find();
-    results.toArray().then((documents) => {
-        res.status(200).json(documents);
+    results.toArray().then((contact_list) => {
+        res.render('contacts', { 'contacts': contact_list })
         console.log('Returned All Contacts');
    });
 });
@@ -15,9 +15,8 @@ routes.get('/:id', (req, res) => {
     
     const results = connect.getCollection().find({_id: contactId});
 
-
-    results.toArray().then((documents) => {
-        res.status(200).json(documents[0]);
+    results.toArray().then((contact_list) => {
+        res.render('contacts', { 'contacts': contact_list });
         console.log(`Returned First Contact: ${req.params.id}`);
    });
 });

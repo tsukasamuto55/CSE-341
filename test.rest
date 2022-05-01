@@ -1,0 +1,14 @@
+GET http://localhost:3000/contacts 
+
+###
+
+GET http://localhost:3000/contacts/626a2b59dd1f976a135ac255
+
+###
+
+GET https://cse341-muto.herokuapp.com/contacts
+
+###
+
+GET https://cse341-muto.herokuapp.com/contacts/626a2b59dd1f976a135ac255
+
