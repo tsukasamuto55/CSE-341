@@ -2,8 +2,32 @@ GET http://localhost:3000/contacts
 
 ###
 
-GET http://localhost:3000/contacts/626a2b59dd1f976a135ac255
+GET http://localhost:3000/contacts/627596af11540a004262cbfb
 
+###
+
+POST http://cse341-muto.herokuapp.com/newContact/
+Accept: application/json,
+content-type: application/json
+
+{
+    "firstName": "James",
+    "lastName": "Wright",
+    "email": "j.wright@email.com",
+    "favoriteColor": "Black",
+    "birthday": "1975-04-12"
+}
+###
+
+PUT http://cse341-muto.herokuapp.comeditContact/627596af11540a004262cbfb
+Accept: application/json,
+content-type: application/json
+
+{
+    "firstName": "James",
+    "lastName": "Wright",
+    "favoriteColor": "Black"
+}
 ###
 
 GET https://cse341-muto.herokuapp.com/contacts

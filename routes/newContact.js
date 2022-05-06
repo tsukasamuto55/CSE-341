@@ -1,18 +1,9 @@
 const routes = require('express').Router();
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const Contact = require('../models/contact');
 
 routes.use(bodyParser.urlencoded({ extended: true }));
-
-const contactSchema = {
-  firstName: String,
-  lastName: String,
-  email: String,
-  favoriteColor: String,
-  birthday: String,
-};
-
-const Contact = mongoose.model('Contact', contactSchema);
+routes.use(bodyParser.json());
 
 routes.get('/', (req, res) => {
   res.render('newContact');
@@ -29,7 +20,7 @@ routes.post('/', (req, res) => {
 
   newContact.save((err, res) => {
     if (err) console.log(err);
-    else console.log('A new account was inserted successfully');
+    else console.log(`A new contact with the id: ${res._id} is added.`);
   });
 
   res.redirect('/newContact');
