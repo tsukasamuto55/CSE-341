@@ -7,15 +7,17 @@ routes.get('/', async (req, res) => {
   } catch (err) {
     res.json({ error: err.message || err.toString() });
   }
-})
+});
 
-routes.use('/home', (require('./home')))
+routes.use('/home', require('./home'));
 
-routes.use('/contacts', (require('./contacts')));
+routes.use('/contacts', require('./contacts'));
+
+routes.use('/newContact', require('./newContact'));
 
 routes.get('/family', (req, res) => {
   const data = familyData;
-  res.render('family', {...data});
-})
+  res.render('family', { ...data });
+});
 
-module.exports = routes 
+module.exports = routes;
