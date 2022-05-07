@@ -1,3 +1,4 @@
+# Tests on Localhost: 3000
 GET http://localhost:3000/contacts 
 
 ###
@@ -6,20 +7,20 @@ GET http://localhost:3000/contacts/627596af11540a004262cbfb
 
 ###
 
-POST http://cse341-muto.herokuapp.com/newContact/
+POST http://localhost:3000/newContact/
 Accept: application/json,
 content-type: application/json
 
 {
-    "firstName": "James",
-    "lastName": "Wright",
-    "email": "j.wright@email.com",
+    "firstName": "Kevin",
+    "lastName": "Char",
+    "email": "k.char@email.com",
     "favoriteColor": "Black",
-    "birthday": "1975-04-12"
+    "birthday": "1979-04-12"
 }
 ###
 
-PUT http://cse341-muto.herokuapp.comeditContact/627596af11540a004262cbfb
+PUT http://localhost:3000/editContact/627596af11540a004262cbfb
 Accept: application/json,
 content-type: application/json
 
@@ -30,6 +31,12 @@ content-type: application/json
 }
 ###
 
+DELETE http://localhost:3000/deleteContact/6276ce581b2f28f44c1222b9
+
+###
+
+
+# Tests on Production site
 GET https://cse341-muto.herokuapp.com/contacts
 
 ###

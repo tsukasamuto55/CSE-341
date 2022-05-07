@@ -20,10 +20,12 @@ routes.post('/', (req, res) => {
 
   newContact.save((err, res) => {
     if (err) console.log(err);
-    else console.log(`A new contact with the id: ${res._id} is added.`);
+    else {
+      console.log(`A new contact with the id: ${res._id} is added.`);
+    }
   });
-
-  res.redirect('/newContact');
+  res.status(201).json(`New contact Id: ${newContact._id}`);
+  // res.redirect(`/contacts/${newContact}`);
 });
 
 module.exports = routes;
