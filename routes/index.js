@@ -11,9 +11,6 @@ routes.get('/', async (req, res) => {
 
 routes.use('/home', require('./home'));
 routes.use('/contacts', require('./contacts'));
-routes.use('/newContact', require('./newContact'));
-routes.use('/editContact', require('./editContact'));
-routes.use('/deleteContact', require('./deleteContact'));
 
 routes.get('/family', (req, res) => {
   const data = familyData;

@@ -7,7 +7,7 @@ GET http://localhost:3000/contacts/6276d5a48464683b8550117e
 
 ###
 
-POST http://localhost:3000/newContact/
+POST http://localhost:3000/contacts/newContact/
 Accept: application/json,
 content-type: application/json
 
@@ -20,7 +20,7 @@ content-type: application/json
 }
 ###
 
-PUT http://localhost:3000/editContact/6276d5a48464683b8550117e
+PUT http://localhost:3000/contacts/6276d5a48464683b8550117e/edit
 Accept: application/json,
 content-type: application/json
 
@@ -31,7 +31,7 @@ content-type: application/json
 }
 ###
 
-DELETE http://localhost:3000/deleteContact/6276d5a48464683b8550117e
+DELETE http://localhost:3000/contacts/62770c417634dd0d8ae6e939/delete
 
 ###
 
@@ -45,7 +45,7 @@ GET https://cse341-muto.herokuapp.com/contacts/6276d5cad4bb8c11767e76cb
 
 ###
 
-POST https://cse341-muto.herokuapp.com/newContact
+POST https://cse341-muto.herokuapp.com/contacts/newContact
 Accept: application/json,
 content-type: application/json
 
@@ -58,7 +58,7 @@ content-type: application/json
 }
 ###
 
-PUT http://cse341-muto.herokuapp.com/editContact/6276d5cad4bb8c11767e76cb
+PUT http://cse341-muto.herokuapp.com/contacts/6276d5cad4bb8c11767e76cb/edit
 Accept: application/json,
 content-type: application/json
 
@@ -68,5 +68,5 @@ content-type: application/json
 }
 ###
 
-DELETE http://cse341-muto.herokuapp.com/deleteContact/6276d5cad4bb8c11767e76cb
+DELETE http://cse341-muto.herokuapp.com/contacts/6276d5cad4bb8c11767e76cb/delete
 
