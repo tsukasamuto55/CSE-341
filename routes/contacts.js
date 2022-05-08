@@ -9,10 +9,10 @@ routes.use(bodyParser.json());
 
 // create a new contact
 routes.get('/newContact', (req, res) => {
-  res.render('newContact');
+  res.render('contacts/newContact');
 });
 
-routes.post('/newContact', (req, res) => {
+routes.post('/', (req, res) => {
   let newContact = new Contact({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -60,7 +60,7 @@ routes.get('/', (req, res) => {
   const results = connect.getCollection().find();
   results.toArray().then((contact_list) => {
     res.status(200);
-    res.render('contacts', { contacts: contact_list });
+    res.render('contacts/index', { contacts: contact_list });
     console.log('Returned All Contacts');
   });
 });
@@ -71,7 +71,7 @@ routes.get('/:id', (req, res) => {
   const results = connect.getCollection().find({ _id: contactId });
 
   results.toArray().then((contact_list) => {
-    res.render('contacts', { contacts: contact_list });
+    res.render('contacts/index', { contacts: contact_list });
     console.log(`Returned Contact: ${req.params.id}`);
   });
 });
