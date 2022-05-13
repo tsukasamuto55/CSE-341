@@ -5,7 +5,7 @@ const doc = {
     title: 'Week 04 Personal Project',
     description: 'Contact API',
   },
-  host: 'localhost:3000',
+  host: 'cse341-muto.herokuapp.com',
   schemes: ['http'],
 };
 
