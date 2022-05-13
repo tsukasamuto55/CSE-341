@@ -8,8 +8,18 @@ routes.use(bodyParser.urlencoded({ extended: true }));
 routes.use(bodyParser.json());
 
 // Render a new contact form and create a new contact
-routes.get('/newContact', (req, res) => {
-  res.render('contacts/newContact');
+// routes.get('/newContact', (req, res) => {
+//   res.render('contacts/newContact');
+// });
+
+// show all contacts
+routes.get('/', (req, res) => {
+  const results = connect.getCollection().find();
+  results.toArray().then((contact_list) => {
+    res.status(200);
+    res.render('contacts/index', { contacts: contact_list });
+    console.log('Returned All Contacts');
+  });
 });
 
 routes.post('/', (req, res) => {
@@ -60,16 +70,6 @@ routes.delete('/:id/delete', (req, res) => {
     if (err) return res.status(500).send(err);
 
     return res.status(200).send(response);
-  });
-});
-
-// show all contacts
-routes.get('/', (req, res) => {
-  const results = connect.getCollection().find();
-  results.toArray().then((contact_list) => {
-    res.status(200);
-    res.render('contacts/index', { contacts: contact_list });
-    console.log('Returned All Contacts');
   });
 });
 

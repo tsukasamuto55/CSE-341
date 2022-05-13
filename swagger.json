@@ -8,27 +8,9 @@
   "host": "cse341-muto.herokuapp.com",
   "basePath": "/",
   "schemes": [
-    "http"
+    "https"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/family": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/api-docs": {
       "get": {
         "description": "",
@@ -36,7 +18,7 @@
         "responses": {}
       }
     },
-    "/home/": {
+    "/contacts/": {
       "get": {
         "description": "",
         "parameters": [],
@@ -45,16 +27,7 @@
             "description": "OK"
           }
         }
-      }
-    },
-    "/contacts/newContact": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/contacts/": {
+      },
       "post": {
         "description": "",
         "parameters": [
@@ -86,15 +59,6 @@
         "responses": {
           "201": {
             "description": "Created"
-          }
-        }
-      },
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
           }
         }
       }
