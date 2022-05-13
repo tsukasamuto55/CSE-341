@@ -7,7 +7,7 @@ const Contact = require('../models/contact');
 routes.use(bodyParser.urlencoded({ extended: true }));
 routes.use(bodyParser.json());
 
-// create a new contact
+// Render a new contact form and create a new contact
 routes.get('/newContact', (req, res) => {
   res.render('contacts/newContact');
 });

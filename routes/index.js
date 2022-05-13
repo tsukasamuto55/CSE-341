@@ -9,6 +9,7 @@ routes.get('/', async (req, res) => {
   }
 });
 
+routes.use('/', require('./swagger'));
 routes.use('/home', require('./home'));
 routes.use('/contacts', require('./contacts'));
 

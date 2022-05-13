@@ -68,5 +68,5 @@ content-type: application/json
 }
 ###
 
-DELETE http://cse341-muto.herokuapp.com/contacts/6276d5cad4bb8c11767e76cb/delete
+DELETE http://cse341-muto.herokuapp.com/contacts/6277115c4e5d07ebe3a664bb/delete
 
