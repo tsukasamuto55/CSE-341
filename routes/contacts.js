@@ -34,7 +34,15 @@ routes.post('/', (req, res) => {
 // edit a contact
 routes.put('/:id/edit', (req, res) => {
   const { id } = req.params;
-  Contact.findByIdAndUpdate(id, req.body, { new: true }, (err) => {
+  let contact = new Contact({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    favoriteColor: req.body.favoriteColor,
+    birthday: req.body.birthday,
+  });
+
+  Contact.findByIdAndUpdate(id, contact, { new: true }, (err) => {
     if (err) return res.status(500).send(err);
     return res.status(204).send();
   });
