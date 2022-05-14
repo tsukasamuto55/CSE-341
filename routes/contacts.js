@@ -7,11 +7,6 @@ const Contact = require('../models/contact');
 routes.use(bodyParser.urlencoded({ extended: true }));
 routes.use(bodyParser.json());
 
-// Render a new contact form and create a new contact
-// routes.get('/newContact', (req, res) => {
-//   res.render('contacts/newContact');
-// });
-
 // show all contacts
 routes.get('/', (req, res) => {
   const results = connect.getCollection().find();
