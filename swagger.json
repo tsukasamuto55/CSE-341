@@ -11,6 +11,17 @@
     "https"
   ],
   "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api-docs": {
       "get": {
         "description": "",
@@ -49,6 +60,15 @@
                 "favoriteColor": {
                   "example": "any"
                 },
+                "favoriteFood": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                },
+                "hobby": {
+                  "example": "any"
+                },
                 "birthday": {
                   "example": "any"
                 }
@@ -61,6 +81,20 @@
             "description": "Created"
           }
         }
+      }
+    },
+    "/contacts/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
       }
     },
     "/contacts/{id}/edit": {
@@ -89,6 +123,15 @@
                   "example": "any"
                 },
                 "favoriteColor": {
+                  "example": "any"
+                },
+                "favoriteFood": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                },
+                "hobby": {
                   "example": "any"
                 },
                 "birthday": {
@@ -127,20 +170,6 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/contacts/{id}": {
-      "get": {
-        "description": "",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {}
       }
     }
   }

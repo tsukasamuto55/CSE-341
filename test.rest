@@ -7,7 +7,7 @@ GET http://localhost:3000/contacts/6276d5a48464683b8550117e
 
 ###
 
-POST http://localhost:3000/contacts/newContact/
+POST http://localhost:3000/contacts/
 Accept: application/json,
 content-type: application/json
 
@@ -16,6 +16,9 @@ content-type: application/json
     "lastName": "Char",
     "email": "k.char@email.com",
     "favoriteColor": "Black",
+    "favoriteFood": "Ramen",
+    "location": "Los Angeles",
+    "hobby": "Watch movies",
     "birthday": "1979-04-12"
 }
 ###
@@ -54,6 +57,9 @@ content-type: application/json
     "lastName": "Ito",
     "email": "m.ito@email.com",
     "favoriteColor": "Purple",
+      "favoriteFood": "Cheese Cake",
+    "location": "Seattle",
+    "hobby": "Watch Anime",
     "birthday": "1986-08-12"
 }
 ###

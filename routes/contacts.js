@@ -23,6 +23,9 @@ routes.post('/', (req, res) => {
     lastName: req.body.lastName,
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
+    favoriteFood: req.body.favoriteFood,
+    location: req.body.location,
+    hobby: req.body.hobby,
     birthday: req.body.birthday,
   });
 
@@ -36,16 +39,30 @@ routes.post('/', (req, res) => {
   // res.redirect(`/contacts/${newContact}`);
 });
 
+// Show one contact
+routes.get('/:id', (req, res) => {
+  const contactId = new ObjectId(req.params.id);
+  const results = connect.getCollection().find({ _id: contactId });
+
+  results.toArray().then((contact_list) => {
+    res.render('contacts/index', { contacts: contact_list });
+    console.log(`Returned Contact: ${req.params.id}`);
+  });
+});
+
 // edit a contact
 routes.put('/:id/edit', (req, res) => {
   const { id } = req.params;
-  let contact = new Contact({
+  let contact = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     favoriteColor: req.body.favoriteColor,
+    favoriteFood: req.body.favoriteFood,
+    location: req.body.location,
+    hobby: req.body.hobby,
     birthday: req.body.birthday,
-  });
+  };
 
   Contact.findByIdAndUpdate(id, contact, { new: true }, (err) => {
     if (err) return res.status(500).send(err);
@@ -65,17 +82,6 @@ routes.delete('/:id/delete', (req, res) => {
     if (err) return res.status(500).send(err);
 
     return res.status(200).send(response);
-  });
-});
-
-// Show one contact
-routes.get('/:id', (req, res) => {
-  const contactId = new ObjectId(req.params.id);
-  const results = connect.getCollection().find({ _id: contactId });
-
-  results.toArray().then((contact_list) => {
-    res.render('contacts/index', { contacts: contact_list });
-    console.log(`Returned Contact: ${req.params.id}`);
   });
 });
 
