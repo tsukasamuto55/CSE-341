@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 3000;
 const path = require('path');
 const connection = require('./db/connect');
 
 connection.initDatabase();
 
-app.use((req, res, next) => {
+app.use(bodyParser.json()).use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Allow-Headers',
