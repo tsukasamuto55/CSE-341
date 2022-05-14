@@ -3,7 +3,7 @@ GET http://localhost:3000/contacts
 
 ###
 
-GET http://localhost:3000/contacts/6276d5a48464683b8550117e
+GET http://localhost:3000/contacts/62800b9fe52844d243357c26
 
 ###
 
@@ -12,18 +12,18 @@ Accept: application/json,
 content-type: application/json
 
 {
-    "firstName": "Kevin",
-    "lastName": "Char",
-    "email": "k.char@email.com",
-    "favoriteColor": "Black",
-    "favoriteFood": "Ramen",
-    "location": "Los Angeles",
-    "hobby": "Watch movies",
-    "birthday": "1979-04-12"
+    "firstName": "Jackie",
+    "lastName": "Smith",
+    "email": "j.smith@email.com",
+    "favoriteColor": "Red",
+    "favoriteFood": "BBQ",
+    "location": "Seattle",
+    "hobby": "Watch Anime",
+    "birthday": "1984-03-19"
 }
 ###
 
-PUT http://localhost:3000/contacts/6276d5a48464683b8550117e/edit
+PUT http://localhost:3000/contacts/6276d5a48464683b8550117e/
 Accept: application/json,
 content-type: application/json
 
@@ -34,7 +34,7 @@ content-type: application/json
 }
 ###
 
-DELETE http://localhost:3000/contacts/6276d5a48464683b8550117e/delete
+DELETE http://localhost:3000/contacts/6276d5a48464683b8550117e/
 
 ###
 
@@ -44,35 +44,36 @@ GET https://cse341-muto.herokuapp.com/contacts
 
 ###
 
-GET https://cse341-muto.herokuapp.com/contacts/627711c54e5d07ebe3a664bf
+GET https://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a
 
 ###
 
-POST https://cse341-muto.herokuapp.com/contacts/newContact
+POST https://cse341-muto.herokuapp.com/contacts
 Accept: application/json,
 content-type: application/json
 
 {
-    "firstName": "Masami",
-    "lastName": "Ito",
-    "email": "m.ito@email.com",
-    "favoriteColor": "Purple",
-      "favoriteFood": "Cheese Cake",
+    "firstName": "Chisaki",
+    "lastName": "Hisamatsu",
+    "email": "c.hisamatsu@email.com",
+    "favoriteColor": "Light Blue",
+    "favoriteFood": "Yakisoba",
     "location": "Seattle",
-    "hobby": "Watch Anime",
-    "birthday": "1986-08-12"
+    "hobby": "Surfing Internet",
+    "birthday": "1982-10-12"
 }
 ###
 
-PUT http://cse341-muto.herokuapp.com/contacts/627711c54e5d07ebe3a664bf/edit
+PUT http://cse341-muto.herokuapp.com/contacts/6280020ac28e7a479f318051/
 Accept: application/json,
 content-type: application/json
 
 {
     "lastName": "Levin",
-    "favoriteColor": "Gold"
+    "favoriteColor": "Gold",
+    "location": "Portland"
 }
 ###
 
-DELETE http://cse341-muto.herokuapp.com/contacts/6277115c4e5d07ebe3a664bb/delete
+DELETE http://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a/
 
