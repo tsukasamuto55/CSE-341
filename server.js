@@ -18,6 +18,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, DELETE, OPTIONS'
   );
+  next();
 });
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
