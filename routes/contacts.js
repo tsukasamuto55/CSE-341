@@ -30,7 +30,7 @@ routes.post('/', (req, res) => {
   });
 
   newContact.save((err, res) => {
-    if (err) console.log(err);
+    if (err) res.status(500).json(err);
     else {
       console.log(`A new contact with the id: ${res._id} is added.`);
     }
@@ -51,7 +51,7 @@ routes.get('/:id', (req, res) => {
 });
 
 // edit a contact
-routes.put('/:id/edit', (req, res) => {
+routes.put('/:id', (req, res) => {
   const { id } = req.params;
   let contact = {
     firstName: req.body.firstName,
@@ -71,7 +71,7 @@ routes.put('/:id/edit', (req, res) => {
 });
 
 // delete a contact
-routes.delete('/:id/delete', (req, res) => {
+routes.delete('/:id', (req, res) => {
   const { id } = req.params;
   const response = {
     message: 'Contact has been removed',

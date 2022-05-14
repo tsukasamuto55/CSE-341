@@ -11,17 +11,6 @@
     "https"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api-docs": {
       "get": {
         "description": "",
@@ -41,44 +30,13 @@
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "any"
-                },
-                "lastName": {
-                  "example": "any"
-                },
-                "email": {
-                  "example": "any"
-                },
-                "favoriteColor": {
-                  "example": "any"
-                },
-                "favoriteFood": {
-                  "example": "any"
-                },
-                "location": {
-                  "example": "any"
-                },
-                "hobby": {
-                  "example": "any"
-                },
-                "birthday": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {
           "201": {
             "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -95,9 +53,7 @@
           }
         ],
         "responses": {}
-      }
-    },
-    "/contacts/{id}/edit": {
+      },
       "put": {
         "description": "",
         "parameters": [
@@ -149,9 +105,7 @@
             "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/contacts/{id}/delete": {
+      },
       "delete": {
         "description": "",
         "parameters": [
