@@ -1,4 +1,4 @@
-const playlistSchema = new mongoose.Schema(
+const playlistSchema = mongoose.Schema(
   {
     name: { type: String, required: true },
     genre: { type: String, required: true },

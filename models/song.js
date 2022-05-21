@@ -1,4 +1,4 @@
-const songSchema = new mongoose.Schema(
+const songSchema = mongoose.Schema(
   {
     title: { type: String, required: true },
     artist: { type: String, required: true },

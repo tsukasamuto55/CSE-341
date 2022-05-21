@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,10 +17,9 @@ app.use('/', require('./routes'));
 mongoose
   .connect(process.env.DB_STRING, {
     useNewUrlParser: true,
-    useFindAndModify: true,
     useUnifiedTopology: true,
   })
-  .catch((err) => handleError(err));
+  .catch((err) => console.error(err));
 
 app.listen(port, (err) => {
   if (err) console.log('There are some errors');
