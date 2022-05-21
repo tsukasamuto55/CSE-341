@@ -1,16 +1,25 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000;
-const path = require('path');
-const connection = require('./db/connect');
 
-connection.initDatabase();
+const dotenv = require('dotenv');
+dotenv.config();
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.set('public', path.join(__dirname, 'public'));
+app.use(bodyParser.json());
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  next();
+});
 app.use('/', require('./routes'));
-app.use(express.static('public'));
+
+mongoose
+  .connect(process.env.DB_STRING, {
+    useNewUrlParser: true,
+    useFindAndModify: true,
+    useUnifiedTopology: true,
+  })
+  .catch((err) => handleError(err));
 
 app.listen(port, (err) => {
   if (err) console.log('There are some errors');

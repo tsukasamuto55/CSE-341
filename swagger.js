@@ -18,6 +18,6 @@ const endpointsFiles = ['./routes/index.js'];
 
 // swaggerAutogen(outputFile, endpointsFiles, doc);
 
-swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  require('./server.js'); // Your project's root file
-});
+// swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
+//   require('./server.js'); // Your project's root file
+// });

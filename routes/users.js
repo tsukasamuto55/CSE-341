@@ -1,14 +1,10 @@
-const routes = require('express').Router();
+const router = require('express').Router();
 const connect = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
-const bodyParser = require('body-parser');
-const Contact = require('../models/contact');
-
-routes.use(bodyParser.urlencoded({ extended: true }));
-routes.use(bodyParser.json());
+const User = require('../models/user');
 
 // show all contacts
-routes.get('/', (req, res) => {
+router.get('/', (req, res) => {
   const results = connect.getCollection().find();
   results.toArray().then((contact_list) => {
     res.status(200);
@@ -17,7 +13,7 @@ routes.get('/', (req, res) => {
   });
 });
 
-routes.post('/', (req, res) => {
+router.post('/', (req, res) => {
   let newContact = new Contact({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
@@ -40,7 +36,7 @@ routes.post('/', (req, res) => {
 });
 
 // Show one contact
-routes.get('/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const contactId = new ObjectId(req.params.id);
   const results = connect.getCollection().find({ _id: contactId });
 
@@ -51,7 +47,7 @@ routes.get('/:id', (req, res) => {
 });
 
 // edit a contact
-routes.put('/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { id } = req.params;
   let contact = {
     firstName: req.body.firstName,
@@ -71,7 +67,7 @@ routes.put('/:id', (req, res) => {
 });
 
 // delete a contact
-routes.delete('/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { id } = req.params;
   const response = {
     message: 'Contact has been removed',
@@ -85,4 +81,4 @@ routes.delete('/:id', (req, res) => {
   });
 });
 
-module.exports = routes;
+module.exports = router;
