@@ -35,7 +35,7 @@ content-type: application/json
 
 
 # # Tests on Production site
-# GET https://cse341-muto.herokuapp.com/contacts
+GET https://cse341-music-playlist-api.com/users
 
 # ###
 
