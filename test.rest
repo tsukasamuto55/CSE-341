@@ -1,79 +1,74 @@
 # Tests on Localhost: 3000
-GET http://localhost:3000/contacts 
+GET http://localhost:3000/users 
 
 ###
 
-GET http://localhost:3000/contacts/62800b9fe52844d243357c26
+GET http://localhost:3000/users/ENTER_ID
 
 ###
 
-POST http://localhost:3000/contacts/
+POST http://localhost:3000/users/
 Accept: application/json,
 content-type: application/json
 
 {
-    "firstName": "Jackie",
-    "lastName": "Smith",
-    "email": "j.smith@email.com",
-    "favoriteColor": "Red",
-    "favoriteFood": "BBQ",
-    "location": "Seattle",
-    "hobby": "Watch Anime",
-    "birthday": "1984-03-19"
+     "username": "masamunya55",
+    "email": "t.muto@email.com",
+    "password": "wed%^67yehh"
 }
 ###
 
-PUT http://localhost:3000/contacts/6276d5a48464683b8550117e/
-Accept: application/json,
-content-type: application/json
+# PUT http://localhost:3000/contacts/6276d5a48464683b8550117e/
+# Accept: application/json,
+# content-type: application/json
 
-{
-    "firstName": "Tyson",
-    "lastName": "Jacksons",
-    "favoriteColor": "Pink"
-}
-###
+# {
+#     "firstName": "Tyson",
+#     "lastName": "Jacksons",
+#     "favoriteColor": "Pink"
+# }
+# ###
 
-DELETE http://localhost:3000/contacts/6276d5a48464683b8550117e/
+# DELETE http://localhost:3000/contacts/6276d5a48464683b8550117e/
 
-###
+# ###
 
 
-# Tests on Production site
-GET https://cse341-muto.herokuapp.com/contacts
+# # Tests on Production site
+# GET https://cse341-muto.herokuapp.com/contacts
 
-###
+# ###
 
-GET https://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a
+# GET https://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a
 
-###
+# ###
 
-POST https://cse341-muto.herokuapp.com/contacts
-Accept: application/json,
-content-type: application/json
+# POST https://cse341-muto.herokuapp.com/contacts
+# Accept: application/json,
+# content-type: application/json
 
-{
-    "firstName": "Chisaki",
-    "lastName": "Hisamatsu",
-    "email": "c.hisamatsu@email.com",
-    "favoriteColor": "Light Blue",
-    "favoriteFood": "Yakisoba",
-    "location": "Seattle",
-    "hobby": "Surfing Internet",
-    "birthday": "1982-10-12"
-}
-###
+# {
+#     "firstName": "Chisaki",
+#     "lastName": "Hisamatsu",
+#     "email": "c.hisamatsu@email.com",
+#     "favoriteColor": "Light Blue",
+#     "favoriteFood": "Yakisoba",
+#     "location": "Seattle",
+#     "hobby": "Surfing Internet",
+#     "birthday": "1982-10-12"
+# }
+# ###
 
-PUT http://cse341-muto.herokuapp.com/contacts/6280020ac28e7a479f318051/
-Accept: application/json,
-content-type: application/json
+# PUT http://cse341-muto.herokuapp.com/contacts/6280020ac28e7a479f318051/
+# Accept: application/json,
+# content-type: application/json
 
-{
-    "lastName": "Long",
-    "favoriteColor": "Gold",
-    "location": "Portland"
-}
-###
+# {
+#     "lastName": "Long",
+#     "favoriteColor": "Gold",
+#     "location": "Portland"
+# }
+# ###
 
-DELETE http://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a/
+# DELETE http://cse341-muto.herokuapp.com/contacts/628002c4c28e7a479f31805a/
 

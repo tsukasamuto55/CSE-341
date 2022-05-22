@@ -5,7 +5,7 @@ const doc = {
     title: 'Week 05 Personal Project',
     description: 'Music API',
   },
-  host: 'cse341-muto.herokuapp.com',
+  host: 'cse341-music-playlist-api.com',
   schemes: ['https'],
 };
 
