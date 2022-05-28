@@ -3,7 +3,7 @@ GET http://localhost:3000/users
 
 ###
 
-GET http://localhost:3000/users/ENTER_ID
+# GET http://localhost:3000/users/6289acf72e9d805361903f2f
 
 ###
 
@@ -12,9 +12,9 @@ Accept: application/json,
 content-type: application/json
 
 {
-     "username": "masamunya55",
-    "email": "t.muto@email.com",
-    "password": "wed%^67yehh"
+     "username": "typeMaster",
+    "email": "t.master@email.com",
+    "password": "wed%^jiiuuh456"
 }
 ###
 
