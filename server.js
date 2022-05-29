@@ -32,8 +32,6 @@ app.use(
   })
 );
 
-// app.use('/', require('./routes'));
-
 app.listen(port, (err) => {
   if (err) console.log('There are some errors');
   console.log(`Listening on Port ${port}`);
