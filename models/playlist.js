@@ -4,7 +4,12 @@ const playlistSchema = new Schema(
   {
     name: { type: String },
     genre: { type: String },
-    songId: [{ type: String }],
+    songs: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Song',
+      },
+    ],
   },
   { collection: 'playlists' }
 );
