@@ -15,7 +15,8 @@ const SongType = require('./song');
 const PlaylistType = new GraphQLObjectType({
   name: 'Playlist',
   fields: () => ({
-    name: { type: GraphQLString },
+    _id: { type: GraphQLNonNull(GraphQLString) },
+    name: { type: GraphQLNonNull(GraphQLString) },
     genre: { type: GraphQLString },
     songId: { type: GraphQLID },
     songs: {

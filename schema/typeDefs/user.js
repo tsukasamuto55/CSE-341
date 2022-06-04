@@ -1,16 +1,17 @@
 const graphql = require('graphql');
 const db = require('../../models/index');
 
-const { GraphQLObjectType, GraphQLString, GraphQLList } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLList, GraphQLNonNull } =
+  graphql;
 
 const PlaylistType = require('./playlist');
 
 const UserType = new GraphQLObjectType({
   name: 'User',
   fields: () => ({
-    username: { type: GraphQLString },
-    email: { type: GraphQLString },
-    password: { type: GraphQLString },
+    _id: { type: GraphQLNonNull(GraphQLString) },
+    username: { type: GraphQLNonNull(GraphQLString) },
+    email: { type: GraphQLNonNull(GraphQLString) },
     playlistId: { type: GraphQLString },
     playlists: {
       type: new GraphQLList(PlaylistType),

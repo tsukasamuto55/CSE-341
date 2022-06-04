@@ -1,21 +1,17 @@
 const graphql = require('graphql');
 const db = require('../../models/index');
 
-const {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLID,
-  GraphQLInt,
-  GraphQLNonNull,
-} = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLNonNull } =
+  graphql;
 
 const PopularityEnumType = require('./enum');
 
 const SongType = new GraphQLObjectType({
   name: 'Song',
   fields: () => ({
-    title: { type: GraphQLString },
-    artist: { type: GraphQLString },
+    _id: { type: GraphQLNonNull(GraphQLString) },
+    title: { type: GraphQLNonNull(GraphQLString) },
+    artist: { type: GraphQLNonNull(GraphQLString) },
     releasedYear: { type: GraphQLInt },
     time: { type: GraphQLString },
     popularity: {

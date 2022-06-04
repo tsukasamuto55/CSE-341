@@ -3,6 +3,7 @@ const db = require('../models/index');
 const UserType = require('./typeDefs/user');
 const SongType = require('./typeDefs/song');
 const PlaylistType = require('./typeDefs/playlist');
+const validator = require('validator');
 
 const {
   GraphQLObjectType,
@@ -127,6 +128,14 @@ const Mutation = new GraphQLObjectType({
             });
         });
       },
+    },
+    signup: {
+      type: UserType,
+      args: {
+        email: { type: GraphQLString },
+        password: { type: GraphQLString },
+      },
+      resolve(parent, args, request) {},
     },
   },
 });
