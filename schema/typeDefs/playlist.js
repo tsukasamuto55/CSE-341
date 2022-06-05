@@ -11,6 +11,7 @@ const {
 } = graphql;
 
 const SongType = require('./song');
+const UserType = require('./user');
 
 const PlaylistType = new GraphQLObjectType({
   name: 'Playlist',
@@ -18,6 +19,7 @@ const PlaylistType = new GraphQLObjectType({
     _id: { type: GraphQLNonNull(GraphQLString) },
     name: { type: GraphQLNonNull(GraphQLString) },
     genre: { type: GraphQLString },
+    // user: { type: UserType },
     songId: { type: GraphQLID },
     songs: {
       type: new GraphQLList(SongType),

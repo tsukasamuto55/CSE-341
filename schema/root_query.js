@@ -23,7 +23,7 @@ const RootQuery = new GraphQLObjectType({
       description: 'List a song based on a song ID from database',
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return db.song.findById(args.id);
+        return db.song.findById(args.id).populate('composer');
       },
     },
     playlist: {

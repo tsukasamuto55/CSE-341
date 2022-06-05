@@ -5,6 +5,7 @@ const userSchema = new Schema(
     username: { type: String },
     email: { type: String },
     password: { type: String },
+    createdSong: [{ type: Schema.Types.ObjectId, ref: 'Song' }],
   },
   { collection: 'users' }
 );

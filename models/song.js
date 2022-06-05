@@ -12,12 +12,10 @@ const songSchema = new Schema(
     },
     quality: { type: String, enum: ['SD', 'HD', 'ULTRA HD'], required: true },
     language: { type: String },
-    playlists: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Playlist',
-      },
-    ],
+    composer: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   { collection: 'songs' }
 );

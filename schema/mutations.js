@@ -1,9 +1,12 @@
 const graphql = require('graphql');
 const db = require('../models/index');
 const UserType = require('./typeDefs/user');
+const SignUpInputType = require('./typeDefs/signupInput');
+const LoginInput = require('./typeDefs/loginInput');
 const SongType = require('./typeDefs/song');
 const PlaylistType = require('./typeDefs/playlist');
-const validator = require('validator');
+const bcrypt = require('bcryptjs');
+const User = require('../models/user');
 
 const {
   GraphQLObjectType,
@@ -16,20 +19,37 @@ const {
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    addUser: {
-      type: UserType,
+    createUser: {
+      type: SignUpInputType,
       args: {
         username: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
       },
-      resolve(parent, args) {
-        let user = new db.user({
-          username: args.username,
-          email: args.email,
-          password: args.password,
-        });
-        return user.save();
+      resolve(parent, args, request) {
+        return User.findOne({ email: args.email })
+          .then((user) => {
+            if (user) {
+              throw new Error(
+                `User with the email address "${args.email}" already exists`
+              );
+            }
+            return bcrypt.hash(args.password, 12);
+          })
+          .then((hashedPassword) => {
+            let user = new db.user({
+              username: args.username,
+              email: args.email,
+              password: hashedPassword,
+            });
+            return user.save();
+          })
+          .then((result) => {
+            return { ...result._doc, password: null, _id: result.id };
+          })
+          .catch((err) => {
+            throw err;
+          });
       },
     },
     addSong: {
@@ -59,25 +79,48 @@ const Mutation = new GraphQLObjectType({
           quality: args.quality,
           language: args.language,
         });
-        return song.save();
+        return song
+          .save()
+          .then()
+          .catch((err) => {
+            throw err;
+          });
       },
     },
-    addPlaylist: {
+    createPlaylist: {
       type: PlaylistType,
       args: {
         name: { type: new GraphQLNonNull(GraphQLString) },
         genre: { type: GraphQLString },
-        userId: { type: new GraphQLNonNull(GraphQLID) },
+        userId: { type: GraphQLID },
         songId: { type: GraphQLID },
       },
       resolve(parent, args) {
+        let createdPlaylist;
         let playList = new db.playlist({
           name: args.name,
           genre: args.genre,
-          userId: args.userId,
-          songId: args.songId,
+          user: '629c06cee4037e5a67a8f8b1',
         });
-        return playList.save();
+        return playList
+          .save()
+          .then((result) => {
+            createdPlaylist = {
+              ...result._doc,
+              password: null,
+              _id: result.id,
+            };
+            return User.findById('629c06cee4037e5a67a8f8b1');
+          })
+          .then((user) => {
+            if (!user) throw new Error('User does not exist');
+            user.createdPlaylist.push(playList);
+            return user.save();
+          })
+          .then((result) => createdPlaylist)
+          .catch((err) => {
+            throw err;
+          });
       },
     },
     updateUser: {
@@ -128,14 +171,6 @@ const Mutation = new GraphQLObjectType({
             });
         });
       },
-    },
-    signup: {
-      type: UserType,
-      args: {
-        email: { type: GraphQLString },
-        password: { type: GraphQLString },
-      },
-      resolve(parent, args, request) {},
     },
   },
 });
