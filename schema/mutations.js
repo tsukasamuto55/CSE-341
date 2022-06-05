@@ -1,11 +1,14 @@
 const graphql = require('graphql');
-const db = require('../models/index');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+
 const UserType = require('./typeDefs/user');
 const SignUpInputType = require('./typeDefs/signupInput');
 const LoginInput = require('./typeDefs/loginInput');
 const SongType = require('./typeDefs/song');
 const PlaylistType = require('./typeDefs/playlist');
-const bcrypt = require('bcryptjs');
+
+const db = require('../models/index');
 const User = require('../models/user');
 
 const {
@@ -19,14 +22,14 @@ const {
 const Mutation = new GraphQLObjectType({
   name: 'Mutation',
   fields: {
-    createUser: {
-      type: SignUpInputType,
+    signupUser: {
+      type: UserType,
       args: {
         username: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
       },
-      resolve(parent, args, request) {
+      resolve(parent, args) {
         return User.findOne({ email: args.email })
           .then((user) => {
             if (user) {
@@ -37,12 +40,26 @@ const Mutation = new GraphQLObjectType({
             return bcrypt.hash(args.password, 12);
           })
           .then((hashedPassword) => {
-            let user = new db.user({
+            let newUser = new db.user({
               username: args.username,
-              email: args.email,
+              email: args.email.toLowerCase(),
               password: hashedPassword,
             });
-            return user.save();
+            console.log(newUser.username + ': ' + newUser.email);
+
+            const token = jwt.sign(
+              {
+                user_id: newUser._id,
+                email: newUser.email,
+              },
+              'UNSAFE_STRING',
+              {
+                expiresIn: '2h',
+              }
+            );
+            newUser.token = token;
+
+            return newUser.save();
           })
           .then((result) => {
             return { ...result._doc, password: null, _id: result.id };
@@ -50,6 +67,66 @@ const Mutation = new GraphQLObjectType({
           .catch((err) => {
             throw err;
           });
+      },
+    },
+    // loginUser: {
+    //   type: UserType,
+    //   args: {
+    //     email: { type: new GraphQLNonNull(GraphQLString) },
+    //     password: { type: new GraphQLNonNull(GraphQLString) },
+    //   },
+    //   resolve(parent, args) {
+    //     return User.findOne({ email: args.email }).then((user) => {
+    //       if (user && bcrypt.compare(args.password, user.password).then()) {
+    //         const token = jwt.sign(
+    //           {
+    //             user_id: user._id,
+    //             email: user.email,
+    //           },
+    //           'UNSAFE_STRING',
+    //           {
+    //             expiresIn: '2h',
+    //           }
+    //         );
+    //         user.token = token;
+    //         return {
+    //           id: user.id,
+    //           ...user._doc,
+    //         };
+    //       } else {
+    //         throw new Error('Incorrect password');
+    //       }
+    //     });
+    //   },
+    // },
+    loginUser: {
+      type: UserType,
+      args: {
+        email: { type: new GraphQLNonNull(GraphQLString) },
+        password: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        return User.findOne({ email: args.email }).then((user) => {
+          if (user && bcrypt.compare(args.password, user.password).then()) {
+            const token = jwt.sign(
+              {
+                user_id: user._id,
+                email: user.email,
+              },
+              'UNSAFE_STRING',
+              {
+                expiresIn: '2h',
+              }
+            );
+            user.token = token;
+            return {
+              id: user.id,
+              ...user._doc,
+            };
+          } else {
+            throw new Error('Incorrect password');
+          }
+        });
       },
     },
     addSong: {
