@@ -1,18 +1,19 @@
 const graphql = require('graphql');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
 const UserType = require('./typeDefs/user');
-const SignUpInputType = require('./typeDefs/signupInput');
-const LoginInput = require('./typeDefs/loginInput');
 const SongType = require('./typeDefs/song');
 const PlaylistType = require('./typeDefs/playlist');
+const SignupUserInput = require('./typeDefs/signupInput');
 
 const db = require('../models/index');
 const User = require('../models/user');
 
 const {
   GraphQLObjectType,
+  GraphQLInputObjctType,
   GraphQLString,
   GraphQLID,
   GraphQLInt,
@@ -28,6 +29,7 @@ const Mutation = new GraphQLObjectType({
         username: { type: new GraphQLNonNull(GraphQLString) },
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
+        // input: { type: new GraphQLNonNull(SignupUserInput) },
       },
       resolve(parent, args) {
         return User.findOne({ email: args.email })
@@ -42,11 +44,9 @@ const Mutation = new GraphQLObjectType({
           .then((hashedPassword) => {
             let newUser = new db.user({
               username: args.username,
-              email: args.email.toLowerCase(),
+              email: args.email,
               password: hashedPassword,
             });
-            console.log(newUser.username + ': ' + newUser.email);
-
             const token = jwt.sign(
               {
                 user_id: newUser._id,
@@ -69,64 +69,32 @@ const Mutation = new GraphQLObjectType({
           });
       },
     },
-    // loginUser: {
-    //   type: UserType,
-    //   args: {
-    //     email: { type: new GraphQLNonNull(GraphQLString) },
-    //     password: { type: new GraphQLNonNull(GraphQLString) },
-    //   },
-    //   resolve(parent, args) {
-    //     return User.findOne({ email: args.email }).then((user) => {
-    //       if (user && bcrypt.compare(args.password, user.password).then()) {
-    //         const token = jwt.sign(
-    //           {
-    //             user_id: user._id,
-    //             email: user.email,
-    //           },
-    //           'UNSAFE_STRING',
-    //           {
-    //             expiresIn: '2h',
-    //           }
-    //         );
-    //         user.token = token;
-    //         return {
-    //           id: user.id,
-    //           ...user._doc,
-    //         };
-    //       } else {
-    //         throw new Error('Incorrect password');
-    //       }
-    //     });
-    //   },
-    // },
     loginUser: {
       type: UserType,
       args: {
         email: { type: new GraphQLNonNull(GraphQLString) },
         password: { type: new GraphQLNonNull(GraphQLString) },
       },
-      resolve(parent, args) {
-        return User.findOne({ email: args.email }).then((user) => {
-          if (user && bcrypt.compare(args.password, user.password).then()) {
-            const token = jwt.sign(
-              {
-                user_id: user._id,
-                email: user.email,
-              },
-              'UNSAFE_STRING',
-              {
-                expiresIn: '2h',
-              }
-            );
-            user.token = token;
-            return {
-              id: user.id,
-              ...user._doc,
-            };
-          } else {
-            throw new Error('Incorrect password');
-          }
-        });
+      async resolve(parent, args) {
+        const user = await User.findOne({ email: args.email });
+        if (user && (await bcrypt.compare(args.password, user.password))) {
+          const token = jwt.sign(
+            {
+              user_id: user._id,
+              email: user.mail,
+            },
+            'UNSAFESTRING',
+            { expiresIn: '2h' }
+          );
+          user.token = token;
+
+          return {
+            id: user.id,
+            ...user._doc,
+          };
+        } else {
+          throw new Error('Incorrect information. Please try again.');
+        }
       },
     },
     addSong: {

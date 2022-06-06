@@ -1,19 +1,13 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
-const bodyParser = require('body-parser');
+const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const schema = require('./schema/schema');
 
 const dotenv = require('dotenv');
 dotenv.config();
-
-app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  next();
-});
 
 mongoose
   .connect(process.env.DB_STRING, {

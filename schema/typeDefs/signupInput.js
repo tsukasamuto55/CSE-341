@@ -1,16 +1,13 @@
-// const graphql = require('graphql');
-// const db = require('../../models/index');
+const graphql = require('graphql');
+const { GraphQLString, GraphQLInputObjectType, GraphQLNonNull } = graphql;
 
-// const { GraphQLInputObjectType, GraphQLString, GraphQLNonNull } = graphql;
+const SignupUserInputType = new GraphQLInputObjectType({
+  name: 'SignupUserInpuy',
+  fields: () => ({
+    username: { type: GraphQLNonNull(GraphQLString) },
+    email: { type: GraphQLNonNull(GraphQLString) },
+    password: { type: GraphQLNonNull(GraphQLString) },
+  }),
+});
 
-// const SignUpInputType = new GraphQLInputObjectType({
-//   name: 'SignUpInput',
-//   fields: () => ({
-//     _id: { type: GraphQLString },
-//     username: { type: GraphQLNonNull(GraphQLString) },
-//     email: { type: GraphQLNonNull(GraphQLString) },
-//     password: { type: GraphQLNonNull(GraphQLString) },
-//   }),
-// });
-
-// module.exports = SignUpInputType;
+module.exports = SignupUserInputType;
