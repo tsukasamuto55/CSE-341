@@ -9,7 +9,7 @@ const userSchema = new Schema(
       type: String,
       minLength: 6,
     },
-    token: { type: String },
+    googleId: { type: String },
     createdSong: [{ type: Schema.Types.ObjectId, ref: 'Song' }],
   },
   { collection: 'users' }
