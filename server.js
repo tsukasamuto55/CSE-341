@@ -21,6 +21,7 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   csrfPrevention: true,
+  introspection: true,
   plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   context: ({ req }) => ({ req }),
 });
