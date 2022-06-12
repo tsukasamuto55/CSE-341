@@ -9,7 +9,8 @@ const userSchema = new Schema(
       type: String,
       minLength: 6,
     },
-    googleId: { type: String },
+    // googleId: { type: String },
+    token: { type: String },
     createdSong: [{ type: Schema.Types.ObjectId, ref: 'Song' }],
   },
   { collection: 'users' }
