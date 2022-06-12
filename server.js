@@ -1,6 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const { ApolloServer } = require('apollo-server-express');
+const {
+  ApolloServerPluginLandingPageLocalDefault,
+} = require('apollo-server-core');
 const mongoose = require('mongoose');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
@@ -9,7 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 const corsOptions = {
   origin: '*',
   credentials: true,
@@ -17,6 +20,8 @@ const corsOptions = {
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  csrfPrevention: true,
+  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
   context: ({ req }) => ({ req }),
 });
 

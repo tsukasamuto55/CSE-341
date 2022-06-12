@@ -23,6 +23,7 @@
   "homepage": "https://github.com/tsukasamuto55/CSE-341#readme",
   "dependencies": {
     "apollo-server": "^3.8.2",
+    "apollo-server-core": "^3.8.2",
     "apollo-server-errors": "^3.3.1",
     "apollo-server-express": "^3.8.2",
     "bcrypt": "^5.0.1",
