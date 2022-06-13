@@ -4,7 +4,17 @@ module.exports = {
   Mutation: {
     async addSong(
       _,
-      { title, artist, releasedYear, time, popularity, quality, language }
+      {
+        songInput: {
+          title,
+          artist,
+          releasedYear,
+          time,
+          popularity,
+          quality,
+          language,
+        },
+      }
     ) {
       const addSong = new db.song({
         title,
@@ -29,10 +39,10 @@ module.exports = {
     },
   },
   Query: {
-    async song(_, { ID }) {
+    async getSong(_, { ID }) {
       return await db.song.findById(ID);
     },
-    async songs(_, args) {
+    async getSongs(_, args) {
       return await db.song.find();
     },
   },

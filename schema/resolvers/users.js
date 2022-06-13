@@ -1,5 +1,4 @@
 const db = require('../../models/index');
-const { ApolloServer, gql, UserInputError } = require('apollo-server-express');
 const { ApolloError } = require('apollo-server-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -11,7 +10,7 @@ module.exports = {
       { signupInput: { username, email, password, confirmPassword } }
     ) {
       if (!(email && password && username && confirmPassword)) {
-        res.status(400).send('All input is required');
+        throw new ApolloError('Please enter all required fields');
       }
 
       const oldUser = await db.user.findOne({ email });
@@ -23,7 +22,9 @@ module.exports = {
         );
       }
 
-      var encryptedPassword = await bcrypt.hash(password, 10);
+      if (password === confirmPassword) {
+        var encryptedPassword = await bcrypt.hash(password, 10);
+      } else new ApolloError('Password must match');
 
       const newUser = new db.user({
         username: username,
@@ -46,9 +47,8 @@ module.exports = {
     },
     async loginUser(_, { loginInput: { email, password } }) {
       if (!(email && password)) {
-        res.status(400).send('All input is required');
+        throw new ApolloError('Please enter all required fields.');
       }
-
       const user = await db.user.findOne({ email });
 
       if (user && (await bcrypt.compare(password, user.password))) {
@@ -65,39 +65,33 @@ module.exports = {
           ...user._doc,
         };
       } else {
-        throw new ApolloError('Incorrect password', 'INCORRECT_PASSWORD');
+        throw new ApolloError('Incorrect credentials. Please try again.');
       }
     },
-    async editUser(_, { ID }) {
+    async editUser(_, { ID, userInput: { username, email, password } }) {
       const wasEdited = (
-        await db.user.updateOne({ _id: ID }, { username, email, password })
+        await db.user.updateOne(
+          { _id: ID },
+          { username: username, email: email, password: password }
+        )
       ).modifiedCount;
-      return wasEdited; // if something was edited, return 1, if nothing was edited, return 1
+
+      if (wasEdited > 0) return wasEdited;
+      else throw new ApolloError('No information has been modified.');
     },
 
     async deleteUser(_, { ID }) {
       const wasDeleted = (await db.user.deleteOne({ _id: ID })).deletedCount;
-      return wasDeleted; // if something was deleted, return 1, if nothing was deleted, return 1
+      if (wasDeleted > 0) return wasDeleted;
+      else throw new ApolloError("User hasn't been deleted successfully.");
     },
   },
   Query: {
-    async user(_, { ID }) {
+    async getUser(_, { ID }) {
       return await db.user.findById(ID);
     },
-    async playlist(_, { ID }) {
-      return await db.playlist.findById(ID);
-    },
-    async song(_, { ID }) {
-      return await db.song.findById(ID);
-    },
-    async users(_, args) {
+    async getUsers(_, args) {
       return await db.user.find();
-    },
-    async playlists(_, args) {
-      return await db.playlist.find();
-    },
-    async songs(_, args) {
-      return await db.song.find();
     },
   },
 };

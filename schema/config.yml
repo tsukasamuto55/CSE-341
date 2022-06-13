@@ -1,0 +1,15 @@
+spectaql:
+
+introspection:
+  url: 'https://cse341-music-playlist-api.herokuapp.com/graphql'
+info:
+  title: Music API
+  description: 'Simple GraphQL API to create a playlist'
+  contact:
+    name: Tsukasa Muto
+    email: mut20005@byui.edu
+
+servers:
+  - url: 'https://cse341-music-playlist-api.herokuapp.com/graphql'
+    description: Production
+    production: true

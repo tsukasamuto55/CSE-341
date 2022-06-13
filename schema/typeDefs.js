@@ -2,27 +2,39 @@ const { gql } = require('apollo-server-express');
 
 module.exports = gql`
   type User {
-    username: String
-    email: String
+    username: String!
+    email: String!
     password: String
     token: String
   }
 
   type Playlist {
-    name: String
+    name: String!
     genre: String
-    songId: String
+    # songId: String
     # songs: Song
   }
 
   type Song {
-    title: String
+    title: String!
     artist: String
     releasedYear: String
     time: String
-    # popularity: enum: ['Low', 'Medium', 'High']
-    # quality: enum: ['SD', 'HD', 'Ultra HD']
+    popularity: PopularityEnum
+    quality: QualityEnum
     language: String
+  }
+
+  enum PopularityEnum {
+    Low
+    Medium
+    High
+  }
+
+  enum QualityEnum {
+    SD
+    HD
+    UHD
   }
 
   input UserInput {
@@ -32,24 +44,41 @@ module.exports = gql`
   }
 
   input SignupInput {
-    username: String
-    email: String
-    password: String
-    confirmPassword: String
+    username: String!
+    email: String!
+    password: String!
+    confirmPassword: String!
   }
 
   input LoginInput {
-    email: String
-    password: String
+    email: String!
+    password: String!
+  }
+
+  input SongInput {
+    title: String!
+    artist: String!
+    releasedYear: String!
+    time: String!
+    popularity: PopularityEnum!
+    quality: QualityEnum!
+    language: String
+  }
+
+  input PlaylistInput {
+    name: String!
+    genre: String!
+    user: ID
+    songs: [ID]
   }
 
   type Query {
-    user(id: ID!): User
-    playlist(id: ID!): Playlist
-    song(id: ID!): Song
-    users: [User]
-    playlists: [Playlist]
-    songs: [Song]
+    getUser(ID: ID!): User
+    getPlaylist(ID: ID!): Playlist
+    getSong(ID: ID!): Song
+    getUsers: [User]
+    getPlaylists: [Playlist]
+    getSongs: [Song]
   }
 
   type Mutation {
@@ -57,5 +86,9 @@ module.exports = gql`
     loginUser(loginInput: LoginInput): User
     editUser(ID: ID, userInput: UserInput): Boolean
     deleteUser(ID: ID!): Boolean
+    addSong(songInput: SongInput): Song
+    deleteSong(ID: ID): Boolean
+    addPlaylist(playlistInput: PlaylistInput): Playlist
+    deletePlaylist(ID: ID): Boolean
   }
 `;

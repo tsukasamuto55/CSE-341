@@ -7,16 +7,17 @@ const {
 const mongoose = require('mongoose');
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
+const bodyParser = require('body-parser');
 
 const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 4000;
-const corsOptions = {
-  origin: '*',
-  credentials: true,
-};
+
+app.use(bodyParser.json());
+app.use(cors());
+
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
@@ -26,12 +27,10 @@ const apolloServer = new ApolloServer({
   context: ({ req }) => ({ req }),
 });
 
-app.use(cors(corsOptions));
-
 apolloServer
   .start()
   .then(() => {
-    apolloServer.applyMiddleware({ app, cors: corsOptions, path: '/graphql' });
+    apolloServer.applyMiddleware({ app, cors: false, path: '/graphql' });
   })
   .catch((err) => {
     console.error(err);
