@@ -50,7 +50,7 @@ app.listen(port, (err) => {
   console.log(`Listening on Port ${port}`);
 });
 
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
   authRequired: false,
@@ -68,3 +68,5 @@ app.use(auth(config));
 app.get('/', (req, res) => {
   res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
 });
+
+app.get('/login', (req, res) => res.oidc.login({ returnTo: '/graphql' }));
