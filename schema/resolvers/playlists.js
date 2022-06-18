@@ -1,4 +1,5 @@
 const db = require('../../models/index');
+const playlist = db.playlist;
 const { ApolloError } = require('apollo-server-errors');
 
 // const songs = async (songIds) => {
@@ -44,9 +45,9 @@ module.exports = {
         throw new ApolloError(err);
       }
     },
-    async editPlaylist(_, { ID, playlistInput: { name, genre } }) {
+    async editPlaylist(_, { ID, playlistInput: { name, genre, songs } }) {
       const wasEdited = (
-        await db.playlist.updateOne({ _id: ID }, { name, genre })
+        await db.playlist.updateOne({ _id: ID }, { name, genre, songs })
       ).modifiedCount;
 
       console.log(wasEdited);
@@ -75,6 +76,13 @@ module.exports = {
       } catch (err) {
         new ApolloError(err.message);
       }
+    },
+  },
+  Playlist: {
+    songs: async (playlist, args, context, info) => {
+      await playlist.populate('songs').exec();
+      console.log(playlist);
+      return playlist.songs;
     },
   },
 };
