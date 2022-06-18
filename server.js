@@ -54,6 +54,8 @@ apolloServer
     console.error(err);
   });
 
+app.use('/graphql', Router, requiresAuth());
+
 mongoose
   .connect(process.env.DB_STRING, {
     useNewUrlParser: true,
