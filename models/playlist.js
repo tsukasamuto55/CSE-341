@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { isMongoId } = require('validator');
 const playlistSchema = new Schema(
   {
     name: {

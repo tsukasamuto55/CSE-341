@@ -1,5 +1,11 @@
-// const router = require('express').Router();
+const express = require('express');
+const router = express.Router();
 
-// router.use('/auth', require('./auth'));
+router.get('/home', function (req, res) {
+  res.render('home', {
+    title: 'Welcome to CSE 341: Music Playlist API',
+    isAuthenticated: req.oidc.isAuthenticated(),
+  });
+});
 
-// module.exports = router;
+module.exports = router;
