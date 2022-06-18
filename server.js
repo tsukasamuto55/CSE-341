@@ -6,9 +6,6 @@ const {
 const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
-const cors = require('cors');
-const { expressjwt: jwt } = require('express-jwt');
-const jwksRsa = require('jwks-rsa');
 
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
@@ -17,7 +14,7 @@ const Router = require('./routes');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const { auth } = require('express-openid-connect');
+const { auth, requiresAuth } = require('express-openid-connect');
 
 const config = {
   authRequired: false,
@@ -37,24 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(auth(config));
-
-app.use(cors());
-
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: process.env.jwksUri,
-  }),
-
-  // Validate the audience and the issuer
-  audience: process.env.API_IDENTIFIER,
-  issuer: process.env.ISSUER_BASE_URL,
-  algorithms: ['RS256'],
-});
-
-app.use(checkJwt);
+app.use('/', Router);
 
 const apolloServer = new ApolloServer({
   typeDefs,
