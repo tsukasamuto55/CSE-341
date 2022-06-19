@@ -17,6 +17,7 @@ module.exports = gql`
     popularity: PopularityEnum
     quality: QualityEnum
     language: String
+    playlist: Playlist
   }
 
   enum PopularityEnum {

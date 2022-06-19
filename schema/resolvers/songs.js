@@ -1,5 +1,29 @@
 const db = require('../../models/index');
 
+const songs = async (songIds) => {
+  try {
+    const songs = await db.song.find({ _id: { $in: songIds } });
+    return songs.map((song) => ({
+      ...song._doc,
+      playlist: playlist.bind(this, song._doc.playlist),
+    }));
+  } catch {
+    throw err;
+  }
+};
+
+const playlist = async (playlistId) => {
+  try {
+    const playlist = await db.playlist.findById(playlistId);
+    return {
+      ...playlist._doc,
+      songs: songs.bind(this, playlist._doc.songs),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   Mutation: {
     async addSong(
@@ -49,7 +73,6 @@ module.exports = {
   Query: {
     async getSong(_, { ID }) {
       try {
-        console.log(ID);
         return await db.song.findById(ID);
       } catch (err) {
         throw new Error(err);

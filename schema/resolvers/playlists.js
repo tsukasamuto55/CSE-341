@@ -1,5 +1,29 @@
 const db = require('../../models/index');
 
+const songs = async (songIds) => {
+  try {
+    const songs = await db.song.find({ _id: { $in: songIds } });
+    return songs.map((song) => ({
+      ...song._doc,
+      playlist: playlist.bind(this, song._doc.playlist),
+    }));
+  } catch {
+    throw err;
+  }
+};
+
+const playlist = async (playlistId) => {
+  try {
+    const playlist = await db.playlist.findById(playlistId);
+    return {
+      ...playlist._doc,
+      songs: songs.bind(this, playlist._doc.songs),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 module.exports = {
   Mutation: {
     async createPlaylist(_, { playlistInput: { name, genre, songs } }) {
@@ -39,24 +63,25 @@ module.exports = {
   Query: {
     async getPlaylist(_, { ID }) {
       try {
-        return await db.playlist.findById(ID);
+        const playlist = await db.playlist.findById(ID);
+        return {
+          ...playlist._doc,
+          songs: songs.bind(this, playlist._doc.songs),
+        };
       } catch (err) {
         new Error(err.message);
       }
     },
     async getPlaylists(_, args) {
       try {
-        return await db.playlist.find();
+        const playlists = await db.playlist.find();
+        return playlists.map((playlist) => ({
+          ...playlist._doc,
+          songs: songs.bind(this, playlist._doc.songs),
+        }));
       } catch (err) {
         new Error(err.message);
       }
-    },
-  },
-  Playlist: {
-    songs: async (playlist, args, context, info) => {
-      await db.playlist.populate('songs').exec();
-      console.log(playlist);
-      return db.playlist.songs;
     },
   },
 };
