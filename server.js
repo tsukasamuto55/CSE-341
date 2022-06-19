@@ -6,7 +6,6 @@ const {
 const mongoose = require('mongoose');
 const path = require('path');
 const bodyParser = require('body-parser');
-
 const typeDefs = require('./schema/typeDefs');
 const resolvers = require('./schema/resolvers');
 const Router = require('./routes');
@@ -20,7 +19,8 @@ const config = {
   authRequired: false,
   auth0Logout: true,
   secret: process.env.SECRET,
-  baseURL: process.env.BASE_URL,
+  // baseURL: process.env.BASE_URL,
+  baseURL: 'http://localhost:4000',
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
 };

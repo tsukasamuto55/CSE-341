@@ -1,30 +1,4 @@
 const db = require('../../models/index');
-const playlist = db.playlist;
-const { ApolloError } = require('apollo-server-errors');
-
-// const songs = async (songIds) => {
-//   try {
-//     const songs = await db.song.find({ _id: { $in: songIds } });
-//     return songs.map((song) => ({
-//       ...song._doc,
-//       playlist: playlist.bind(this, song._doc.playlist),
-//     }));
-//   } catch (err) {
-//     throw new ApolloError(err);
-//   }
-// };
-
-// const playlist = async (playlistIds) => {
-//   try {
-//     const playlists = await db.playlist.find({ _id: { $in: playlistIds } });
-//     return playlists.map((playlist) => ({
-//       ...playlist._doc,
-//       song: song.bind(this, playlist._doc.songs),
-//     }));
-//   } catch (err) {
-//     throw new ApolloError(err);
-//   }
-// };
 
 module.exports = {
   Mutation: {
@@ -42,7 +16,7 @@ module.exports = {
           ...res._doc,
         };
       } catch (err) {
-        throw new ApolloError(err);
+        throw new Error(err);
       }
     },
     async editPlaylist(_, { ID, playlistInput: { name, genre, songs } }) {
@@ -59,7 +33,7 @@ module.exports = {
       const wasDeleted = (await db.playlist.deleteOne({ _id: ID }))
         .deletedCount;
       if (wasDeleted > 0) return wasDeleted;
-      else throw new ApolloError('No playlist has been deleted');
+      else throw new Error('No playlist has been deleted');
     },
   },
   Query: {
@@ -67,22 +41,22 @@ module.exports = {
       try {
         return await db.playlist.findById(ID);
       } catch (err) {
-        new ApolloError(err.message);
+        new Error(err.message);
       }
     },
     async getPlaylists(_, args) {
       try {
         return await db.playlist.find();
       } catch (err) {
-        new ApolloError(err.message);
+        new Error(err.message);
       }
     },
   },
   Playlist: {
     songs: async (playlist, args, context, info) => {
-      await playlist.populate('songs').exec();
+      await db.playlist.populate('songs').exec();
       console.log(playlist);
-      return playlist.songs;
+      return db.playlist.songs;
     },
   },
 };
